@@ -28,5 +28,11 @@ namespace SocialMedia.Infraestructure.Repositories
             var post = await _context.Publicacions.FirstOrDefaultAsync(x => x.IdPublicacion == id);
             return post;
         }
+
+        public async Task InsertPost(Publicacion post)
+        {
+            _context.Publicacions.Add(post);
+            await _context.SaveChangesAsync();
+        }
     }
 }

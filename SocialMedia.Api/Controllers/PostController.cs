@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SocialMedia.Core.DTOs;
+using SocialMedia.Core.Entities;
 using SocialMedia.Core.Interfaces;
 using SocialMedia.Infraestructure.Repositories;
 using System;
@@ -14,22 +17,35 @@ namespace SocialMedia.Api.Controllers
     public class PostController : ControllerBase
     {
         private readonly IPostRepository _postRepository;
-        public PostController(IPostRepository postRepository)
+        private readonly IMapper _mapper;
+        public PostController(IPostRepository postRepository, IMapper mapper)
         {
             _postRepository = postRepository;
+            _mapper = mapper;
         }
         [HttpGet]
         public async Task<IActionResult> GetPosts()
         {
             var posts = await _postRepository.GetPosts();
-            return Ok(posts);
+            var postsDTO = _mapper.Map<IEnumerable<PublicacionDTO>>(posts);
+            return Ok(postsDTO);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPost(int id)
         {
             var post = await _postRepository.GetPost(id);
+            var postDTO = _mapper.Map<IEnumerable<PublicacionDTO>>(post);
+            return Ok(postDTO);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InsertPost(PublicacionDTO postDTO)
+        {
+            var post = _mapper.Map<Publicacion>(postDTO);
+            await _postRepository.InsertPost(post);
             return Ok(post);
+
         }
     }
 }
