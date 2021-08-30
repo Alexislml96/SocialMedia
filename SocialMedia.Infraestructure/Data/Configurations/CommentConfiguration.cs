@@ -9,11 +9,13 @@ namespace SocialMedia.Infraestructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Comentario> builder)
         {
-            builder.HasKey(e => e.IdComentario);
+            builder.HasKey(e => e.Id);
 
             builder.ToTable("Comentario");
 
-            builder.Property(e => e.IdComentario).ValueGeneratedNever();
+            builder.Property(e => e.Id)
+                .HasColumnName("IdComentario")
+                .ValueGeneratedNever();
 
             builder.Property(e => e.Descripcion)
                 .IsRequired()

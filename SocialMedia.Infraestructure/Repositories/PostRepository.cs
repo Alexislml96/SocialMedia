@@ -10,29 +10,12 @@ using System.Threading.Tasks;
 
 namespace SocialMedia.Infraestructure.Repositories
 {
-    public class PostRepository : IPostRepository
+    public class PostRepository : BaseRepository<Publicacion>, IPostRepository
     {
-        private readonly BasePruebaHDContext _context;
-        public PostRepository(BasePruebaHDContext context)
+        public PostRepository(BasePruebaHDContext context) : base(context) { }
+        public async Task<IEnumerable<Publicacion>> GetPostsByUser(int userID)
         {
-            _context = context;
-        }
-        public async Task <IEnumerable<Publicacion>> GetPosts()
-        {
-            var posts = await _context.Publicacions.ToListAsync();
-            return posts;
-        }
-
-        public async Task<Publicacion> GetPost(int id)
-        {
-            var post = await _context.Publicacions.FirstOrDefaultAsync(x => x.IdPublicacion == id);
-            return post;
-        }
-
-        public async Task InsertPost(Publicacion post)
-        {
-            _context.Publicacions.Add(post);
-            await _context.SaveChangesAsync();
+            return await _entities.Where(x => x.IdUsuario == userID).ToListAsync();
         }
     }
 }

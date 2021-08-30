@@ -8,9 +8,12 @@ namespace SocialMedia.Infraestructure.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Publicacion> builder)
         {
-            builder.HasKey(e => e.IdPublicacion);
+            builder.HasKey(e => e.Id);
 
             builder.ToTable("Publicacion");
+
+            builder.Property(e => e.Id)
+                    .HasColumnName("IdPublicacion");
 
             builder.Property(e => e.Descripcion)
                 .IsRequired()

@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace SocialMedia.Core.Interfaces
 {
-    public interface IPostRepository
+    public interface IPostRepository : IRepositoryBase<Publicacion>
     {
-        Task<IEnumerable<Publicacion>> GetPosts();
-        Task<Publicacion> GetPost(int id);
-        Task InsertPost(Publicacion post);
+        Task<IEnumerable<Publicacion>> GetPostsByUser(int userID);
     }
 }

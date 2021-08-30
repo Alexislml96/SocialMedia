@@ -5,9 +5,8 @@ using System.Collections.Generic;
 
 namespace SocialMedia.Core.Entities
 {
-    public partial class Comentario
+    public partial class Comentario : BaseEntity
     {
-        public int IdComentario { get; set; }
         public int IdPublicacion { get; set; }
         public int IdUsuario { get; set; }
         public string Descripcion { get; set; }
