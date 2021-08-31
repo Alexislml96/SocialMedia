@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using SocialMedia.Core.Entities;
@@ -23,13 +24,12 @@ namespace SocialMedia.Infraestructure.Data
         public virtual DbSet<Publicacion> Publicacions { get; set; }
         public virtual DbSet<Usuario> Usuarios { get; set; }
 
+        public virtual DbSet<Security> Securities { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
-
-            modelBuilder.ApplyConfiguration(new CommentConfiguration());
-            modelBuilder.ApplyConfiguration(new PostConfiguration());
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            //Apply the configuration from the current assembly 
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

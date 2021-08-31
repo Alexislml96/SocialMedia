@@ -15,6 +15,7 @@ namespace SocialMedia.Infraestructure.Repositories
         private readonly IPostRepository _postRepository;
         private readonly IRepositoryBase<Usuario> _userRepository;
         private readonly IRepositoryBase<Comentario> _commentRepository;
+        private readonly SecurityRepository _securityRepository;
         public UnitOfWork(BasePruebaHDContext context)
         {
             _context = context;
@@ -24,6 +25,8 @@ namespace SocialMedia.Infraestructure.Repositories
         public IRepositoryBase<Usuario> UserRepository => _userRepository ?? new BaseRepository<Usuario>(_context);
 
         public IRepositoryBase<Comentario> CommentRepository => _commentRepository ?? new BaseRepository<Comentario>(_context);
+
+        public ISecurityRepository SecurityRepository => _securityRepository ?? new SecurityRepository(_context);
 
         public void Dispose()
         {
