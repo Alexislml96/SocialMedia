@@ -18,6 +18,7 @@ using SocialMedia.Core.Services;
 using SocialMedia.Infraestructure.Data;
 using SocialMedia.Infraestructure.Filters;
 using SocialMedia.Infraestructure.Interfaces;
+using SocialMedia.Infraestructure.Options;
 using SocialMedia.Infraestructure.Repositories;
 using SocialMedia.Infraestructure.Services;
 using System;
@@ -55,6 +56,7 @@ namespace SocialMedia.Api
                     //options.SuppressModelStateInvalidFilter = true;
                 });
             services.Configure<PaginationOptions>(Configuration.GetSection("Pagination"));
+            services.Configure<PasswordOptions>(Configuration.GetSection("PasswordOptions"));
             //Database connection
             services.AddDbContext<BasePruebaHDContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DataBaseString"))
@@ -64,6 +66,7 @@ namespace SocialMedia.Api
             services.AddTransient<ISecurityService, SecurityService>();
             services.AddScoped(typeof(IRepositoryBase<>), typeof(BaseRepository<>));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IPasswordHash, PasswordService>();
             services.AddSingleton<IUriService>(provider =>
             {
                 var accesor = provider.GetRequiredService<IHttpContextAccessor>();

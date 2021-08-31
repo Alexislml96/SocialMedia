@@ -23,16 +23,21 @@ namespace SocialMedia.Api.Controllers
     {
         private readonly ISecurityService _securityService;
         private readonly IMapper _mapper;
-        public SecurityController(ISecurityService securityService, IMapper mapper)
+        private readonly IPasswordHash _passwordHash;
+        public SecurityController(ISecurityService securityService, IMapper mapper, IPasswordHash passwordHash)
         {
             _securityService = securityService;
             _mapper = mapper;
+            _passwordHash = passwordHash;
         }
 
         [HttpPost]
         public async Task<IActionResult> InsertPost(SecurityDTO securityDTO)
         {
             var security = _mapper.Map<Security>(securityDTO);
+
+            security.Password = _passwordHash.Hash(security.Password);
+
             await _securityService.RegisterUser(security);
             securityDTO = _mapper.Map<SecurityDTO>(security);
             var response = new ApiResponse<SecurityDTO>(securityDTO);
