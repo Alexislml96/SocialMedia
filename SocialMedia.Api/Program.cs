@@ -21,6 +21,7 @@ namespace SocialMedia.Api
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseUrls("https://socialmedia.azurewebsites.net/swagger/index.html");
                 });
     }
 }
