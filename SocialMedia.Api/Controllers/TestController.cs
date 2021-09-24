@@ -10,7 +10,7 @@ namespace SocialMedia.Api.Controllers
     {
         public string TestString()
         {
-            return "Test CI/CD DevOps";
+            return "Test CI/CD DevOps on Azure";
         }
     }
 }
